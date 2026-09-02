@@ -1,0 +1,136 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  openapi/unified-mcp-service-openapi.json, well-known/unified-oauth-authorization-server.json,
+  well-known/unified-oauth-protected-resource.json, and the WWW-Authenticate challenge observed
+  at https://mcp.unified.com/mcp on 2026-09-02.
+note: >-
+  Every assertion below is evidenced by a document that was actually fetched or a header that was
+  actually observed. Unified publishes no compliance or certification page on any anonymous
+  surface (no /security, no trust centre, no SOC 2 / ISO 27001 / PCI / HIPAA claim was found), so
+  no Compliance pointer is emitted.
+conformance:
+- id: openapi-3.1
+  conforms: true
+  evidence:
+    document: https://api.unified.com/openapi.json
+    field: openapi
+    value: 3.1.0
+    file: openapi/unified-mcp-service-openapi.json
+- id: mcp
+  conforms: true
+  evidence:
+    endpoint: https://mcp.unified.com/mcp
+    observed: >-
+      JSON-RPC 2.0 request accepted and refused with an MCP-conformant OAuth challenge; the
+      service names itself "unified-mcp-service". Protocol version could not be read anonymously
+      because initialize/tools/list are gated.
+    http_status: 401
+- id: oauth2
+  conforms: true
+  evidence:
+    document: https://mcp.unified.com/.well-known/oauth-authorization-server
+    observed: authorization_code + refresh_token grants, client_secret_post/basic token auth,
+      revocation endpoint present
+- id: rfc8414
+  title: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence:
+    document: https://mcp.unified.com/.well-known/oauth-authorization-server
+    http_status: 200
+    required_fields_present:
+    - issuer
+    - authorization_endpoint
+    - token_endpoint
+    - response_types_supported
+- id: rfc9728
+  title: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence:
+    document: https://mcp.unified.com/.well-known/oauth-protected-resource/mcp
+    http_status: 200
+    fields:
+    - resource
+    - authorization_servers
+    - scopes_supported
+    - bearer_methods_supported
+    note: >-
+      Served at the resource-suffixed path named by the challenge's resource_metadata parameter;
+      the bare /.well-known/oauth-protected-resource path 404s.
+- id: rfc7591
+  title: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  evidence:
+    document: https://mcp.unified.com/.well-known/oauth-authorization-server
+    field: registration_endpoint
+    value: https://mcp.unified.com/register
+- id: rfc7636
+  title: PKCE
+  conforms: true
+  evidence:
+    field: code_challenge_methods_supported
+    value:
+    - S256
+- id: rfc6750
+  title: OAuth 2.0 Bearer Token Usage
+  conforms: true
+  evidence:
+    header: WWW-Authenticate
+    observed_at: https://mcp.unified.com/mcp
+    value: Bearer error="invalid_token", error_description="...", resource_metadata="..."
+- id: oidc
+  conforms: false
+  evidence:
+    note: >-
+      "openid" is the only advertised scope, but /.well-known/openid-configuration 404s on every
+      host and no id_token, userinfo or jwks_uri is published. The scope name alone is not
+      evidence of an OpenID Connect provider, so this is recorded as not conforming rather than
+      credited.
+- id: rfc9457
+  title: Problem Details for HTTP APIs
+  conforms: false
+  evidence:
+    note: >-
+      No application/problem+json response was observed or declared. Errors use the RFC 6750
+      bearer error object on the MCP side and an unstructured text/plain body on the REST side.
+- id: rfc9116
+  title: security.txt
+  conforms: false
+  evidence:
+    probed: /.well-known/security.txt on www.unified.com, api.unified.com, mcp.unified.com
+    status: 404
+- id: pagination
+  conforms: false
+  evidence:
+    note: No collection endpoint is published, so no pagination convention exists to assert.
+- id: idempotency
+  conforms: false
+  evidence:
+    note: No write surface is published anonymously; see conventions/unified-conventions.yml.
+domain_standards:
+  sector: digital advertising / social advertising technology
+  candidates_probed:
+  - id: openrtb
+    conforms: false
+    evidence:
+      note: >-
+        Unified is a buy-side services and insights company rather than an exchange or SSP, and no
+        bid endpoint, OpenRTB object, or IAB Tech Lab conformance claim appears on any anonymous
+        surface. Not asserted.
+  - id: iab-tech-lab-ads-txt
+    conforms: false
+    evidence:
+      note: >-
+        ads.txt / sellers.json are publisher-side and seller-side artifacts; Unified is neither,
+        so their absence is expected and is not a finding.
+  verdict: >-
+    No domain standard is declared by Unified's contract. This is reward-only in the rubric — a
+    buy-side advertising services company with no exchange surface has no domain standard to
+    declare, and none is invented here.
+compliance_program:
+  published: false
+  probed:
+  - url: https://www.unified.com/security
+    status: 404
+  - url: https://trust.unified.com/
+    status: '000'

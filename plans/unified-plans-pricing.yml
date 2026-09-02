@@ -1,0 +1,27 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://www.unified.com/ (navigation and sitemap), https://www.unified.com/sitemap.xml,
+  https://www.unified.com/services/, https://www.unified.com/pricing (404). Searched 2026-09-02.
+note: >-
+  Unified publishes no pricing at all. The site's own sitemap.xml lists ten pages — home, about,
+  services, partnerships, iheartmedia, ulead, ucares, careers, careers-and-culture, blog — and
+  none of them is a pricing or plans page; /pricing returns 404. The commercial model is a managed
+  services and platform engagement sold through a named contact (hello@unified.com) and the
+  get.unified.com customer application, so there is no tier, quota, overage or self-service
+  signup to record. plan_count is an honest zero rather than an omission.
+model: enterprise / contact-sales
+plan_count: 0
+plans: []
+currency: null
+signup:
+  self_service: false
+  url: https://get.unified.com/login
+  note: The only account surface is a login for existing customers; no public sign-up was found.
+contact: hello@unified.com
+probed:
+- url: https://www.unified.com/pricing
+  status: 404
+- url: https://www.unified.com/sitemap.xml
+  status: 200
+  result: ten URLs, none pricing-related

@@ -1,0 +1,26 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://mcp.unified.com/.well-known/oauth-authorization-server (scopes_supported) and
+  https://mcp.unified.com/.well-known/oauth-protected-resource/mcp (scopes_supported).
+  Probed 2026-09-02.
+note: >-
+  Unified's authorization server advertises exactly one scope. Both the RFC 8414 authorization
+  server metadata and the RFC 9728 protected-resource descriptor for the MCP endpoint list
+  scopes_supported as ["openid"] and nothing else. There is no anonymous permissions or scope
+  reference page to enrich from — docs.unified.com is behind SSO — so this is the complete
+  published scope surface, not a partial read. Fine-grained authorization, if any, is expressed
+  inside the customer's Unified connection rather than in OAuth scope strings.
+authorization_server: https://mcp.unified.com/
+resource: https://mcp.unified.com/mcp
+docs: null
+scope_count: 1
+scopes:
+- name: openid
+  description: >-
+    Advertised verbatim in scopes_supported by both discovery documents. No description is
+    published by the provider; the OIDC-standard meaning is assumed by the name only and is not
+    asserted here.
+  source: https://mcp.unified.com/.well-known/oauth-authorization-server
+  required_for:
+  - https://mcp.unified.com/mcp

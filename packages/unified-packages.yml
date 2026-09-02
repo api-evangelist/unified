@@ -1,0 +1,41 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://api.github.com/orgs/Unified, https://api.github.com/orgs/Unified/repos, plus registry
+  checks. Searched 2026-09-02.
+note: >-
+  Unified ships no first-party client library on any registry. Its GitHub organization
+  (https://github.com/Unified — blog unified.com, location New York, NY) holds nine public
+  repositories and every one of them is a fork or shim of a third-party open-source project
+  (react-select, react-bootstrap-daterangepicker, react-bootstrap-datetimepicker,
+  highcharts-release, react-g-analytics, amazon-redshift-utils, easy-pdf-merge, cq,
+  sqlalchemy-redshift). None wraps a Unified API and none is published under a Unified namespace.
+  IMPORTANT NEGATIVE: the npm package "unified" and the whole unified/remark/rehype ecosystem
+  belong to the unifiedjs project, and the "unified-to" packages belong to Unified.to — a
+  different company profiled at all/unified-to/. Neither is attributed to this provider. No
+  official package pointer (type SDKs) is emitted, because there is no official SDK.
+package_count: 0
+official_count: 0
+packages: []
+registries_checked:
+- npm
+- pypi
+- rubygems
+- crates.io
+- nuget
+- maven-central
+- pkg.go.dev
+- packagist
+github_organization:
+  url: https://github.com/Unified
+  login: Unified
+  description: We can help fix social advertising problems you don't even know you have yet.
+  location: New York, NY
+  blog: https://unified.com
+  public_repos: 9
+  first_party_sdks: 0
+  latest_push_observed: '2023-10-30'
+  note: >-
+    The most recently pushed repository is a fork of sqlalchemy-redshift (2023-10-30); the org
+    profile itself was last updated 2018-07-31. Nothing in the org relates to the MCP service the
+    company runs today.

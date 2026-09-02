@@ -1,0 +1,101 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Unified MCP Service OpenAPI
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-02'
+  method: generated
+  source: openapi/unified-mcp-service-openapi.json
+  note: >-
+    Captures API Evangelist's enhancements to Unified's published OpenAPI without mutating it. The
+    original is stored verbatim as fetched from https://api.unified.com/openapi.json. Every value
+    added below is observed fact (the live host, the observed 404 and 401 behaviour, the OAuth
+    discovery documents) or a pointer to another artifact in this repo — nothing about Unified's
+    business surface is invented, because none is published.
+extends: ../openapi/unified-mcp-service-openapi.json
+actions:
+- target: $.info
+  update:
+    description: >-
+      Operational surface of the Unified MCP Service. This document describes only the service's
+      root identity endpoint and its health, readiness and liveness probes. Unified's business
+      capability is exposed through the remote Model Context Protocol endpoint at
+      https://mcp.unified.com/mcp, which is OAuth-gated and is not described here.
+    contact:
+      name: Unified
+      url: https://www.unified.com/
+      email: hello@unified.com
+    termsOfService: https://www.unified.com/docs/terms-of-use
+    x-privacy-policy: https://www.unified.com/docs/privacy-policy
+- target: $
+  update:
+    servers:
+    - url: https://api.unified.com
+      description: >-
+        Operations host. Observed serving this document and every operation in it on 2026-09-02.
+        The original document declares no servers block; this value is the host the spec was
+        fetched from, not a guess.
+    - url: https://mcp.unified.com
+      description: >-
+        MCP host. Runs the same build (unified-mcp-service 0.0.59, build 66) and serves an
+        identical /openapi.json, plus the OAuth authorization server and the gated /mcp endpoint.
+    externalDocs:
+      description: >-
+        Unified's documentation space is behind single sign-on; docs.unified.com redirects to
+        iheartmedia.unified.com/login. This link is the public company site.
+      url: https://www.unified.com/
+    x-mcp:
+      endpoint: https://mcp.unified.com/mcp
+      auth: oauth
+      authorization_server: https://mcp.unified.com/
+      protected_resource_metadata: https://mcp.unified.com/.well-known/oauth-protected-resource/mcp
+      manifest: ../mcp/unified-mcp.yml
+    x-artifacts:
+      authentication: ../authentication/unified-authentication.yml
+      scopes: ../scopes/unified-scopes.yml
+      errors: ../errors/unified-problem-types.yml
+      conventions: ../conventions/unified-conventions.yml
+      conformance: ../conformance/unified-conformance.yml
+      lifecycle: ../lifecycle/unified-lifecycle.yml
+      well_known: ../well-known/unified-well-known.yml
+      data_model: ../data-model/unified-data-model.yml
+      crosswalk: ../mcp/unified-tool-crosswalk.yml
+- target: $.paths['/'].get
+  update:
+    tags:
+    - service
+    x-observed-response:
+      status: 200
+      body: '{"message":"Welcome to unified-mcp-service","data":{"service":"unified-mcp-service","version":"0.0.59","build":"66","environment":"production"}}'
+      observed_on: '2026-09-02'
+    x-note: >-
+      The declared SuccessResponse.data is an open string map; the four keys returned in practice
+      (service, version, build, environment) are undocumented in the schema.
+- target: $.paths['/health'].get
+  update:
+    x-observed-response:
+      status: 200
+      body: '{"status":"healthy","message":"Service is running"}'
+      observed_on: '2026-09-02'
+- target: $.components
+  update:
+    securitySchemes:
+      mcpOAuth:
+        type: oauth2
+        description: >-
+          Not declared by the original document, and NOT applied to any operation here — the five
+          operations in this spec are genuinely anonymous. Recorded so a reader can see the auth
+          model that governs the sibling MCP endpoint on the same host.
+        flows:
+          authorizationCode:
+            authorizationUrl: https://mcp.unified.com/authorize
+            tokenUrl: https://mcp.unified.com/token
+            refreshUrl: https://mcp.unified.com/token
+            scopes:
+              openid: The only scope advertised by the authorization server metadata.
+    x-error-responses:
+      note: >-
+        The original document declares no 4xx or 5xx responses. Observed behaviour: unrouted paths
+        return 404 with a text/plain "Not Found" body; the gated /mcp endpoint returns 401 with an
+        RFC 6750 bearer error object and a WWW-Authenticate challenge. See
+        ../errors/unified-problem-types.yml.

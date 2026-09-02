@@ -1,0 +1,82 @@
+generated: '2026-09-02'
+method: probed
+source: https://mcp.unified.com/mcp
+name: Unified MCP Service
+status: live
+description: >-
+  Unified runs a production remote Model Context Protocol server at https://mcp.unified.com/mcp.
+  The service identifies itself on its own root endpoint as "unified-mcp-service" version 0.0.59,
+  build 66, environment production, and the same build is served on api.unified.com. An anonymous
+  JSON-RPC tools/list call is refused with HTTP 401 and an RFC 6750 bearer challenge, so the live
+  tool set and its inputSchemas are auth-gated and are NOT recorded here. No tool list is guessed.
+deployment:
+  mode: remote
+  endpoint: https://mcp.unified.com/mcp
+  auth: oauth
+  verified: probed
+transport:
+  protocol: json-rpc-2.0-over-http
+  accept: application/json, text/event-stream
+  note: >-
+    Streamable HTTP. A POST to /mcp with Accept "application/json, text/event-stream" returns 401
+    before any transport negotiation, so the SSE vs streamable-HTTP split could not be observed
+    anonymously.
+authorization:
+  model: oauth2-bearer
+  authorization_server: https://mcp.unified.com/
+  metadata_document: https://mcp.unified.com/.well-known/oauth-authorization-server
+  protected_resource_metadata: https://mcp.unified.com/.well-known/oauth-protected-resource/mcp
+  resource: https://mcp.unified.com/mcp
+  dynamic_client_registration: https://mcp.unified.com/register
+  authorization_endpoint: https://mcp.unified.com/authorize
+  token_endpoint: https://mcp.unified.com/token
+  revocation_endpoint: https://mcp.unified.com/revoke
+  grant_types:
+  - authorization_code
+  - refresh_token
+  code_challenge_methods:
+  - S256
+  scopes:
+  - openid
+  bearer_methods:
+  - header
+tools:
+  status: gated
+  count: null
+  note: >-
+    tools/list requires an authorized bearer token. Unified publishes no llms.txt and no public
+    tool catalog, and its documentation host is behind SSO, so there is no anonymous source for
+    tool names or schemas. Recording the tool set requires an authenticated introspection pass by
+    a Unified customer.
+x-evidence:
+- fetched: '2026-09-02'
+  url: https://mcp.unified.com/mcp
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  content_type: application/json
+  response: >-
+    {"error": "invalid_token", "error_description": "Authentication failed. The provided bearer
+    token is invalid, expired, or no longer recognized by the server. To resolve: clear
+    authentication tokens in your MCP client and reconnect. Your client should automatically
+    re-register and obtain new tokens."}
+  www_authenticate: >-
+    Bearer error="invalid_token", error_description="...",
+    resource_metadata="https://mcp.unified.com/.well-known/oauth-protected-resource/mcp"
+- fetched: '2026-09-02'
+  url: https://mcp.unified.com/
+  http_status: 200
+  content_type: application/json
+  response: '{"message":"Welcome to unified-mcp-service","data":{"service":"unified-mcp-service","version":"0.0.59","build":"66","environment":"production"}}'
+- fetched: '2026-09-02'
+  url: https://mcp.unified.com/.well-known/oauth-protected-resource/mcp
+  http_status: 200
+  content_type: application/json
+  response: '{"resource":"https://mcp.unified.com/mcp","authorization_servers":["https://mcp.unified.com/"],"scopes_supported":["openid"],"bearer_methods_supported":["header"]}'
+ownership:
+  verdict: confirmed
+  reasoning: >-
+    mcp.unified.com and api.unified.com resolve inside unified.com's own Route 53 zone (ns-*.awsdns)
+    to AWS addresses, the OAuth issuer is https://mcp.unified.com/, and the service names itself
+    unified-mcp-service. This is NOT unified.to (all/unified-to/), a separate company whose MCP
+    server is documented at docs.unified.to/mcp; the two are unrelated hosts and unrelated products.

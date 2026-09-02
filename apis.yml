@@ -1,23 +1,113 @@
 aid: unified
 name: Unified
-description: 'Unified is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Unified (Unified Enterprise Corp.) is a New York based omnichannel digital advertising
+  company that pairs a purpose-built social advertising insights and investment-intelligence
+  platform with managed campaign services across paid social, programmatic, OTT and digital
+  audio. Client access to the platform runs through the get.unified.com application and a
+  GitBook-hosted documentation space at docs.unified.com that is behind single sign-on. The
+  company also operates a production remote Model Context Protocol server at
+  https://mcp.unified.com/mcp, fronted by its own OAuth authorization server (RFC 8414
+  metadata, RFC 7591 dynamic client registration, PKCE S256) and an RFC 9728 protected-resource
+  descriptor, plus a FastAPI operations service at api.unified.com that publishes an OpenAPI
+  3.1 description of its root and health endpoints. iHeartMedia, a long-standing partner and
+  investor, is reported to have acquired the company; Unified continues to operate under its
+  own brand at unified.com.
+image: https://cdn.sanity.io/images/o4clnjpa/production/8c1083b248157d01e13c79409ef263fa1397c846-3051x1775.png?w=1200
 url: https://raw.githubusercontent.com/api-evangelist/unified/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-secondary-market-listings:
+- https://forgeglobal.com/unified_stock/
+- https://equityzen.com/company/unified/
 specificationVersion: '0.20'
 created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
-apis: []
+- Advertising
+- Social Media
+- Digital Advertising
+- Marketing
+- Analytics
+- Media
+- Agents
+- MCP
+apis:
+- aid: unified:unified-mcp-service
+  name: Unified MCP Service
+  description: >-
+    The Unified MCP Service is the company's agent-facing surface. Its remote Model Context
+    Protocol endpoint at https://mcp.unified.com/mcp answers JSON-RPC over HTTP and is gated by
+    OAuth bearer tokens issued by https://mcp.unified.com/; an anonymous tools/list call returns
+    401 invalid_token with an RFC 6750 WWW-Authenticate challenge naming the RFC 9728 resource
+    metadata document. The same FastAPI build is served on api.unified.com, which publishes an
+    OpenAPI 3.1.0 description covering the root and health/readiness/liveness endpoints.
+  humanURL: https://www.unified.com/
+  baseURL: https://api.unified.com
+  tags:
+  - MCP
+  - Agents
+  - Advertising
+  properties:
+  - type: OpenAPI
+    url: openapi/unified-mcp-service-openapi.json
+  - type: MCPServer
+    url: mcp/unified-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/unified-tool-crosswalk.yml
+  - type: Overlay
+    url: overlays/unified-mcp-service-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/unified-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/unified_stock/
+  url: https://www.unified.com/
+- type: Blog
+  url: https://www.unified.com/blog/
+- type: Login
+  url: https://get.unified.com/login
+- type: TermsOfService
+  url: https://www.unified.com/docs/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.unified.com/docs/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/Unified
+- type: MCPServer
+  url: mcp/unified-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/unified-tool-crosswalk.yml
+- type: WellKnown
+  url: well-known/unified-well-known.yml
+- type: Authentication
+  url: authentication/unified-authentication.yml
+- type: OAuthScopes
+  url: scopes/unified-scopes.yml
+- type: ErrorCatalog
+  url: errors/unified-problem-types.yml
+- type: Conventions
+  url: conventions/unified-conventions.yml
+- type: Conformance
+  url: conformance/unified-conformance.yml
+- type: Lifecycle
+  url: lifecycle/unified-lifecycle.yml
+- type: DataModel
+  url: data-model/unified-data-model.yml
+- type: LLMsTxt
+  url: llms/unified-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: RateLimits
+  url: rate-limits/unified-rate-limits.yml
+- type: Plans
+  url: plans/unified-plans-pricing.yml
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

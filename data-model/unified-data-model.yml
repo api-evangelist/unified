@@ -1,0 +1,48 @@
+generated: '2026-09-02'
+method: derived
+source: openapi/unified-mcp-service-openapi.json
+note: >-
+  The entity graph is derived from components.schemas in Unified's published OpenAPI. There are
+  two schemas and no $ref between them, so there are no relationships to record. Both are response
+  envelopes for the service's own operational endpoints, not business entities — the business data
+  model lives behind the OAuth-gated MCP tool set and is not observable anonymously. Recorded as a
+  real but trivial graph rather than left absent.
+entity_count: 2
+relationship_count: 0
+entities:
+- name: SuccessResponse
+  description: Standard success response payload.
+  returned_by:
+  - root__get
+  fields:
+  - name: message
+    type: string
+    required: true
+  - name: data
+    type: object
+    required: true
+    additionalProperties: string
+    note: >-
+      Untyped string map. On the live root endpoint it carries service, version, build and
+      environment, but the schema does not name those keys, so an agent cannot rely on them from
+      the contract alone.
+- name: HealthCheckResponse
+  description: Health check response payload.
+  returned_by:
+  - health_check_health__get
+  - health_check_health_get
+  - readiness_check_health_ready_get
+  - liveness_check_health_live_get
+  fields:
+  - name: status
+    type: string
+    required: true
+  - name: message
+    type: string
+    required: true
+relationships: []
+id_prefixes: []
+gaps:
+- No business entity is described in any anonymous Unified contract.
+- SuccessResponse.data is an open string map, so the service-identity fields observed at runtime
+  (service, version, build, environment) are undocumented in the schema.

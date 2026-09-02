@@ -1,0 +1,154 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  Direct HTTP probes of the named /.well-known/ path list against every Unified host found in
+  apis.yml (Website, Login, baseURL) plus the MCP endpoint host named by the OAuth authorization
+  server metadata. Probed 2026-09-02.
+note: >-
+  Two real documents are served, both on the OAuth/MCP side of the estate. api.unified.com and
+  mcp.unified.com run the same FastAPI build ("unified-mcp-service" 0.0.59, build 66) and both
+  answer /.well-known/oauth-authorization-server with an RFC 8414 document whose issuer is
+  https://mcp.unified.com/. The RFC 9728 protected-resource descriptor is NOT at the bare
+  /.well-known/oauth-protected-resource path (404); it is at the resource-suffixed
+  /.well-known/oauth-protected-resource/mcp, which is the exact location the 401 challenge's
+  WWW-Authenticate resource_metadata parameter names. No security.txt, api-catalog, ai-plugin,
+  openid-configuration, UCP/ACP, AAuth resource or agent card is served on any host.
+  www.unified.com is a Netlify-hosted SPA that returns a 1.4 MB HTML 404 body for every unknown
+  path — recorded as a miss, not a document.
+hit_count: 3
+path_echo_control: passed
+soft_404_control:
+  - host: https://www.unified.com
+    path: /.well-known/unified-negative-control-7f3ab91c.json
+    status: 404
+    bytes: 1436692
+    verdict: SPA 404 shell, correct status code, no false 200
+  - host: https://api.unified.com
+    path: /.well-known/unified-negative-control-7f3ab91c.json
+    status: 404
+    bytes: 9
+    verdict: plain "Not Found", no path echo
+  - host: https://mcp.unified.com
+    path: /.well-known/unified-negative-control-7f3ab91c.json
+    status: 404
+    bytes: 9
+    verdict: plain "Not Found", no path echo
+hosts:
+- host: https://api.unified.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: unified-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://mcp.unified.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: unified-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    file: unified-oauth-protected-resource.json
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.unified.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://get.unified.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+  - path: /.well-known/openid-configuration
+    status: 302
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+  - path: /.well-known/oauth-protected-resource
+    status: 302
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+  - path: /.well-known/agent-card.json
+    status: 302
+  - path: /.well-known/agent.json
+    status: 302
+  note: >-
+    Every /.well-known/ path on the customer application host 302s to the login flow; nothing is
+    served anonymously.
+- host: https://docs.unified.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 307
+  - path: /.well-known/openid-configuration
+    status: 307
+  - path: /.well-known/oauth-authorization-server
+    status: 307
+  - path: /.well-known/oauth-protected-resource
+    status: 307
+  - path: /.well-known/api-catalog
+    status: 307
+  - path: /.well-known/ai-plugin.json
+    status: 307
+  - path: /.well-known/agent-card.json
+    status: 307
+  - path: /.well-known/agent.json
+    status: 307
+  note: >-
+    GitBook-hosted docs space; every path 307s into the iheartmedia.unified.com SSO login.

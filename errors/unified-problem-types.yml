@@ -1,0 +1,56 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Observed responses from https://mcp.unified.com/mcp and https://api.unified.com/*, plus
+  openapi/unified-mcp-service-openapi.json. Probed 2026-09-02.
+format: oauth2-bearer-error
+note: >-
+  The published OpenAPI documents NO 4xx or 5xx responses — every operation declares only a 200 —
+  so nothing could be derived from the spec. The error semantics recorded here were observed live.
+  Unified does NOT use RFC 9457 application/problem+json. The MCP endpoint returns the RFC 6750
+  bearer error object (application/json, {error, error_description}) with a matching
+  WWW-Authenticate header, and the FastAPI operations service returns a bare text/plain
+  "Not Found" body on 404 rather than a JSON envelope. There is no anonymous error reference page
+  to enrich from.
+envelope:
+  mcp:
+    content_type: application/json
+    fields:
+    - error
+    - error_description
+    header: WWW-Authenticate
+    header_parameters:
+    - error
+    - error_description
+    - resource_metadata
+  rest:
+    content_type: text/plain; charset=utf-8
+    body: Not Found
+    note: FastAPI default 404 handler; no structured error document.
+problem_types:
+- code: invalid_token
+  status: 401
+  title: Bearer token invalid, expired, or unrecognized
+  detail: >-
+    "Authentication failed. The provided bearer token is invalid, expired, or no longer recognized
+    by the server. To resolve: clear authentication tokens in your MCP client and reconnect. Your
+    client should automatically re-register and obtain new tokens."
+  remediation: >-
+    Discard cached tokens, re-run dynamic client registration at https://mcp.unified.com/register,
+    and complete the authorization_code + PKCE flow again. The challenge names the resource
+    metadata document at https://mcp.unified.com/.well-known/oauth-protected-resource/mcp.
+  observed_at: https://mcp.unified.com/mcp
+  observed_on: '2026-09-02'
+  standard: RFC 6750 section 3.1
+- code: null
+  status: 404
+  title: Not Found
+  detail: Plain-text "Not Found" body returned by the FastAPI service for any unrouted path.
+  remediation: Check the path against https://api.unified.com/openapi.json.
+  observed_at: https://api.unified.com/v1
+  observed_on: '2026-09-02'
+  standard: none — unstructured text response
+gaps:
+- The OpenAPI declares no error responses, so an agent reading only the spec would not know the
+  401 envelope exists.
+- No published error-code registry or status/incident taxonomy was found on any anonymous surface.

@@ -1,0 +1,38 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Response headers observed on https://api.unified.com/, https://api.unified.com/health and
+  https://mcp.unified.com/mcp on 2026-09-02; no anonymous documentation page exists to search.
+note: >-
+  Unified publishes no rate-limit documentation and emits no rate-limit headers on any anonymous
+  response. The headers returned by both hosts are date, content-type, content-length, server
+  (uvicorn) and apigw-requestid, plus www-authenticate on the 401 — there is no X-RateLimit-*,
+  RateLimit-*, or Retry-After. An agent calling Unified therefore has no runtime budget signal at
+  all and can only discover a limit by hitting it. AWS API Gateway sits in front of the service
+  and may enforce an account-level throttle that is simply not surfaced. This is an honest zero,
+  not an unchecked field.
+limit_count: 0
+limits: []
+headers:
+  x_ratelimit_family: not observed
+  ratelimit_family: not observed
+  retry_after: not observed
+  observed_headers:
+  - date
+  - content-type
+  - content-length
+  - server
+  - apigw-requestid
+  - www-authenticate (401 responses only)
+status_on_exhaustion: unknown
+docs: null
+probed:
+- url: https://api.unified.com/
+  http_status: 200
+  ratelimit_headers: none
+- url: https://api.unified.com/health
+  http_status: 200
+  ratelimit_headers: none
+- url: https://mcp.unified.com/mcp
+  http_status: 401
+  ratelimit_headers: none

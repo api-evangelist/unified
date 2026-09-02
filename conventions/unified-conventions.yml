@@ -1,0 +1,84 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  openapi/unified-mcp-service-openapi.json, well-known/unified-oauth-authorization-server.json,
+  well-known/unified-oauth-protected-resource.json, and live responses observed from
+  api.unified.com and mcp.unified.com on 2026-09-02.
+note: >-
+  Derived from the anonymous surface only. Unified's documentation host is behind single sign-on,
+  so nothing here is taken from a docs page — every convention below was observed in a response or
+  read out of a published discovery document. Where a convention could not be established it is
+  recorded as unknown rather than guessed.
+authentication:
+  style: OAuth 2.0 bearer token in the Authorization header, issued by https://mcp.unified.com/
+  anonymous_surface: root, health, readiness, liveness and the OpenAPI document
+  see: authentication/unified-authentication.yml
+idempotency:
+  supported: na
+  header: null
+  scope: null
+  retention: null
+  reason: >-
+    No write surface is published anonymously. The REST description contains five GET operations
+    and no mutating endpoint; the MCP tool set that could mutate is OAuth-gated and was not
+    introspected. No idempotency key header was observed or documented.
+pagination:
+  style: unknown
+  reason: No collection endpoint exists in the published description.
+field_expansion:
+  supported: unknown
+metadata:
+  supported: unknown
+request_id_tracing:
+  header: apigw-requestid
+  observed: true
+  note: >-
+    Responses from api.unified.com and mcp.unified.com carry an AWS API Gateway request id header
+    (apigw-requestid, e.g. "DFbsvjP5IAMEMbA="). This is infrastructure-emitted rather than a
+    documented correlation contract, but it is the only trace handle an agent can quote back.
+  correlation_request_header: unknown
+versioning:
+  style: >-
+    Build identity is exposed in the response body of the root endpoint rather than in the URL or
+    a header. GET https://api.unified.com/ returns
+    {"service":"unified-mcp-service","version":"0.0.59","build":"66","environment":"production"}.
+  url_versioning: false
+  header_versioning: none observed
+  spec_version_field: info.version in the OpenAPI, which tracks the same service version (0.0.59)
+  observed_version: 0.0.59
+  observed_build: '66'
+  observed_on: '2026-09-02'
+error_envelope:
+  mcp: RFC 6750 bearer error object {error, error_description} plus a WWW-Authenticate header
+  rest: plain text body, no structured envelope
+  rfc9457: false
+  see: errors/unified-problem-types.yml
+rate_limit_signaling:
+  headers_observed: none
+  retry_after_observed: false
+  status_on_exhaustion: unknown
+  see: rate-limits/unified-rate-limits.yml
+content_negotiation:
+  request: application/json
+  mcp_accept: application/json, text/event-stream
+  response: application/json
+transport:
+  tls: required; both hosts answer HTTP/2 over TLS
+  http_versions:
+  - h2
+  server: uvicorn behind AWS API Gateway
+reversibility:
+  grade: na
+  reason: >-
+    No write surface is published on any anonymous Unified endpoint. Every operation in the
+    OpenAPI is a GET returning service or health state, and no mutating MCP tool could be observed
+    because tools/list is OAuth-gated. There is consequently no reversal operation to record and
+    no window to state. This is an honest not-applicable, not a zero: if an authenticated
+    introspection later reveals write tools, reversibility must be re-graded then.
+  write_surfaces: []
+  reversal_operations: []
+  windows: []
+  docs: null
+dry_run_mode:
+  supported: na
+  reason: No write surface published anonymously.

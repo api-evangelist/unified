@@ -1,0 +1,74 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Live probes of the Unified estate on 2026-09-02 plus openapi/unified-mcp-service-openapi.json.
+note: >-
+  Unified publishes no anonymous versioning policy, deprecation policy, SLA, changelog or status
+  page. What can be established is the running build, read out of the service's own root payload,
+  and the fact that the Statuspage subdomain the company once held is now inactive. Nothing here
+  is inferred from a marketing page.
+versioning:
+  policy_url: null
+  scheme: >-
+    Semantic-looking service version plus a monotonic build number, exposed in the root response
+    body and mirrored in the OpenAPI info.version. Not expressed in the URL path and not
+    negotiated by header.
+  current_version: 0.0.59
+  current_build: '66'
+  environment: production
+  observed_at: https://api.unified.com/
+  observed_on: '2026-09-02'
+  note: >-
+    A 0.0.x version on a production MCP service is worth flagging to a consumer: the provider is
+    signalling pre-1.0 stability on the only agent-callable surface it publishes, and there is no
+    published policy saying what a version bump is allowed to break.
+deprecation:
+  policy_url: null
+  sunset_header: not observed
+  deprecation_header: not observed
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No operation in the published OpenAPI carries deprecated: true, and no Sunset or Deprecation
+    response header was observed on any anonymous endpoint.
+sla:
+  url: null
+  published: false
+status_page:
+  published: false
+  candidates:
+  - url: https://status.unified.com/
+    status: '000'
+    result: does not resolve
+  - url: https://unified.statuspage.io/
+    status: 200
+    effective_url: https://unified.statuspage.io/inactive
+    result: >-
+      The Atlassian Statuspage subdomain exists but redirects to the "inactive" placeholder — the
+      page is not serving component or incident state. Recorded as NOT a status page; no
+      StatusPage pointer is emitted for it.
+  - url: https://www.unified.com/status
+    status: 404
+health_endpoints:
+- url: https://api.unified.com/health
+  status: 200
+  body: '{"status":"healthy","message":"Service is running"}'
+- url: https://api.unified.com/health/ready
+  operation: readiness_check_health_ready_get
+- url: https://api.unified.com/health/live
+  operation: liveness_check_health_live_get
+  note: >-
+    Liveness and readiness probes are published in the contract, which is a genuine operational
+    signal even though no status page is served.
+changelog:
+  url: null
+  published: false
+  probed:
+  - url: https://www.unified.com/changelog
+    status: 404
+roadmap:
+  url: null
+  published: false
+  probed:
+  - url: https://www.unified.com/roadmap
+    status: 404

@@ -1,0 +1,66 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  openapi/unified-mcp-service-openapi.json (fetched from https://api.unified.com/openapi.json) and
+  the probed MCP endpoint https://mcp.unified.com/mcp
+note: >-
+  Both an MCP server and an OpenAPI description exist for Unified, so the crosswalk is emitted —
+  but it maps nothing, and that absence is the finding. The published OpenAPI covers only the
+  service's own root and health/readiness/liveness probes; it describes no business operations at
+  all. The MCP tool set that would carry the business surface is behind OAuth and returned 401 to
+  an anonymous tools/list. There is therefore no observable overlap between the two projections,
+  and no row here is inferred by name or semantics.
+surfaces:
+  openapi:
+    file: openapi/unified-mcp-service-openapi.json
+    document: https://api.unified.com/openapi.json
+    version: 3.1.0
+    title: unified-mcp-service
+    info_version: 0.0.59
+    operations: 5
+    gated: false
+  mcp:
+    url: https://mcp.unified.com/mcp
+    gated: true
+    gate: OAuth bearer; anonymous tools/list -> 401 invalid_token
+    tools_observed: null
+  graphql:
+    endpoint: null
+    note: /graphql returns 404 on both api.unified.com and mcp.unified.com
+crosswalk: []
+mcp_only: []
+rest_only:
+- operationId: root__get
+  path: /
+  method: get
+  summary: Root
+  note: Service identity payload (service, version, build, environment).
+- operationId: health_check_health__get
+  path: /health/
+  method: get
+  summary: Health Check
+- operationId: health_check_health_get
+  path: /health
+  method: get
+  summary: Health Check
+  note: Duplicate of health_check_health__get at the unslashed path.
+- operationId: readiness_check_health_ready_get
+  path: /health/ready
+  method: get
+  summary: Readiness Check
+- operationId: liveness_check_health_live_get
+  path: /health/live
+  method: get
+  summary: Liveness Check
+coverage:
+  rest_operations: 5
+  mcp_tools: null
+  mapped: 0
+  mcp_only: 0
+  rest_only: 5
+  mapped_pct: 0
+  confidence: high
+  basis: >-
+    High confidence in the zero: both sides were fetched directly, not assumed. The REST side is
+    complete and contains no business operations; the MCP side refused anonymous introspection.
+    An authenticated tools/list by a Unified customer is the only way to populate crosswalk[].

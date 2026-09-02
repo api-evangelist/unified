@@ -1,0 +1,79 @@
+# Unified
+
+> Unified (Unified Enterprise Corp.) is a New York based omnichannel digital advertising company
+> combining a purpose-built social advertising insights platform with managed campaign services
+> across paid social, programmatic, OTT and digital audio. It operates a production remote Model
+> Context Protocol (MCP) server at https://mcp.unified.com/mcp behind its own OAuth authorization
+> server, and a FastAPI operations service at https://api.unified.com that publishes an OpenAPI
+> 3.1 description of its root and health endpoints.
+
+Provenance: generated 2026-09-02 by the API Evangelist enrichment pipeline from this repository's
+artifacts and from live probes of unified.com hosts. Unified does not publish an llms.txt of its
+own (https://www.unified.com/llms.txt, https://api.unified.com/llms.txt and
+https://mcp.unified.com/llms.txt all return 404), so this file is API Evangelist's third-party
+description, not a document served by the company.
+
+## What an agent can actually call
+
+- [MCP endpoint](https://mcp.unified.com/mcp): the company's agent surface. JSON-RPC 2.0 over
+  HTTP. Requires an OAuth bearer token; an anonymous `tools/list` returns 401 `invalid_token`.
+  The tool set and its input schemas are gated and are not listed anywhere publicly.
+- [OpenAPI description](https://api.unified.com/openapi.json): OpenAPI 3.1.0, title
+  `unified-mcp-service`, version 0.0.59. Five operations, all anonymous GETs: `root__get`,
+  `health_check_health__get`, `health_check_health_get`, `readiness_check_health_ready_get`,
+  `liveness_check_health_live_get`. No business operation is described.
+- [Service identity](https://api.unified.com/): returns service name, version, build and
+  environment.
+- [Health](https://api.unified.com/health), [readiness](https://api.unified.com/health/ready),
+  [liveness](https://api.unified.com/health/live).
+
+## How to authorize
+
+- [Authorization server metadata](https://mcp.unified.com/.well-known/oauth-authorization-server)
+  (RFC 8414). Issuer `https://mcp.unified.com/`.
+- [Protected resource metadata](https://mcp.unified.com/.well-known/oauth-protected-resource/mcp)
+  (RFC 9728). Note the resource-suffixed path — the bare path 404s.
+- Dynamic client registration at https://mcp.unified.com/register (RFC 7591), authorization_code
+  and refresh_token grants, PKCE `S256` required, bearer token in the Authorization header.
+- Only one scope is advertised: `openid`.
+
+## Company
+
+- [Website](https://www.unified.com/)
+- [Blog](https://www.unified.com/blog/)
+- [Customer login](https://get.unified.com/login)
+- [Terms of use](https://www.unified.com/docs/terms-of-use)
+- [Privacy policy](https://www.unified.com/docs/privacy-policy)
+- [GitHub organization](https://github.com/Unified) — nine public repositories, all forks of
+  third-party open source; no first-party SDK.
+- Contact: hello@unified.com
+
+## What Unified does not publish
+
+An agent should know these gaps before planning against Unified:
+
+- No public developer portal, quickstart or API reference. `docs.unified.com` returns 200 but
+  redirects into a GitBook single sign-on at `iheartmedia.unified.com/login`.
+- No `llms.txt`, `security.txt`, `api-catalog`, `ai-plugin.json`, `openid-configuration`, or A2A
+  agent card on any host.
+- No pricing or plans page; the commercial model is contact-sales.
+- No status page (the `unified.statuspage.io` subdomain redirects to `/inactive`), no changelog,
+  no roadmap, no deprecation policy, no SLA.
+- No published rate limits and no rate-limit response headers.
+- No first-party SDK or CLI on any package registry.
+- No documented write surface, so idempotency, dry-run and reversibility are all not-applicable
+  on the anonymous surface.
+
+## Repository artifacts (API Evangelist, third-party)
+
+- openapi/unified-mcp-service-openapi.json — the provider's spec, saved verbatim
+- mcp/unified-mcp.yml — MCP server manifest (probed)
+- mcp/unified-tool-crosswalk.yml — REST/MCP crosswalk; zero mapped, and why
+- well-known/unified-well-known.yml — full probe matrix with negative controls
+- authentication/unified-authentication.yml, scopes/unified-scopes.yml
+- errors/unified-problem-types.yml, conventions/unified-conventions.yml
+- conformance/unified-conformance.yml, lifecycle/unified-lifecycle.yml
+- data-model/unified-data-model.yml, rate-limits/unified-rate-limits.yml
+- plans/unified-plans-pricing.yml, packages/unified-packages.yml
+- security/unified-domain-security.yml
+- skills/unified-connect-mcp.md

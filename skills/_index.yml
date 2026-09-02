@@ -1,0 +1,27 @@
+generated: '2026-09-02'
+method: generated
+source: >-
+  openapi/unified-mcp-service-openapi.json, mcp/unified-mcp.yml,
+  well-known/unified-oauth-authorization-server.json, well-known/unified-oauth-protected-resource.json
+note: >-
+  One skill only. Unified publishes no business operations anonymously — its OpenAPI covers root
+  and health probes, and its MCP tool set is OAuth-gated — so there is exactly one marquee flow
+  that can be written against real, verified identifiers: reaching an authorized MCP session. No
+  skill is authored for a capability that could not be verified. Unified publishes no skills or
+  AGENTS.md of its own; a search of its site, sitemap and GitHub organization found none.
+skills:
+- name: unified-connect-mcp
+  file: unified-connect-mcp.md
+  api: unified:unified-mcp-service
+  summary: >-
+    Verify the operations host, read the RFC 9728 and RFC 8414 discovery documents, register a
+    client dynamically, complete the authorization-code + PKCE flow, open an MCP session and
+    discover tools at runtime — with the contract's gaps (no error catalogue, no rate-limit
+    headers, no documented reversal or idempotency) stated up front.
+  operations:
+  - root__get
+  - health_check_health_get
+  - readiness_check_health_ready_get
+  - liveness_check_health_live_get
+  operations_verified: true
+  operations_source: openapi/unified-mcp-service-openapi.json
