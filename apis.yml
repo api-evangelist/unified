@@ -26,6 +26,16 @@ modified: '2026-09-02'
 tags:
 - Company
 - Advertising
+- Social-Media
+- Digital Advertising
+- Marketing
+- Analytics
+- Media
+- Agents
+- MCP
+tags_raw:
+- Company
+- Advertising
 - Social Media
 - Digital Advertising
 - Marketing
@@ -34,36 +44,38 @@ tags:
 - Agents
 - MCP
 apis:
-- aid: unified:unified-mcp-service
-  name: Unified MCP Service
-  description: >-
-    The Unified MCP Service is the company's agent-facing surface. Its remote Model Context
-    Protocol endpoint at https://mcp.unified.com/mcp answers JSON-RPC over HTTP and is gated by
-    OAuth bearer tokens issued by https://mcp.unified.com/; an anonymous tools/list call returns
-    401 invalid_token with an RFC 6750 WWW-Authenticate challenge naming the RFC 9728 resource
-    metadata document. The same FastAPI build is served on api.unified.com, which publishes an
-    OpenAPI 3.1.0 description covering the root and health/readiness/liveness endpoints.
+- aid: unified:unified-health-api
+  name: Unified Health API
+  description: The health API from Unified — 4 operation(s) for health.
   humanURL: https://www.unified.com/
   baseURL: https://api.unified.com
   tags:
-  - MCP
-  - Agents
-  - Advertising
+  - health
   properties:
   - type: OpenAPI
-    url: openapi/unified-mcp-service-openapi.json
-  - type: MCPServer
-    url: mcp/unified-mcp.yml
+    url: openapi/unified-health-api-openapi.yml
   - type: ToolCrosswalk
     url: mcp/unified-tool-crosswalk.yml
-  - type: Overlay
-    url: overlays/unified-mcp-service-overlay.yaml
+- aid: unified:unified-unified-mcp-service-api
+  name: Unified Unified Mcp Service API
+  description: The Unified Mcp Service API from Unified — 1 operation(s) for unified mcp service.
+  humanURL: https://www.unified.com/
+  baseURL: https://api.unified.com
+  tags:
+  - Unified Mcp Service
+  properties:
+  - type: OpenAPI
+    url: openapi/unified-unified-mcp-service-api-openapi.yml
+  - type: ToolCrosswalk
+    url: mcp/unified-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/unified-mcp-service-overlay.yaml
 - type: DomainSecurity
   url: security/unified-domain-security.yml
 - type: Website
