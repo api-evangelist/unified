@@ -50,6 +50,8 @@ apis:
   humanURL: https://www.unified.com/
   baseURL: https://api.unified.com
   tags:
+  - Health
+  tags_raw:
   - health
   properties:
   - type: OpenAPI
