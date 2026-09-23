@@ -1,0 +1,25 @@
+{
+  "provider": "unified",
+  "sources": [
+    "_original/unified-mcp-service-openapi.json"
+  ],
+  "outputs": [
+    "unified-unified-mcp-service-api-openapi.yml",
+    "unified-health-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "unified-mcp-service-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "unified-mcp-service-openapi.json: tagged paths GET / -> Unified Mcp Service",
+    "unified-mcp-service-openapi.json: declared missing tag: Unified Mcp Service",
+    "unified-mcp-service-openapi.json: declared missing tag: health",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "unified-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unified-unified-mcp-service-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
