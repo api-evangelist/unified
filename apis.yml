@@ -26,7 +26,7 @@ modified: '2026-09-02'
 tags:
 - Company
 - Advertising
-- Social-Media
+- Social Media
 - Digital Advertising
 - Marketing
 - Analytics
@@ -43,6 +43,7 @@ tags_raw:
 - Media
 - Agents
 - MCP
+- Social-Media
 apis:
 - aid: unified:unified-health-api
   name: Unified Health API
