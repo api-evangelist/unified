@@ -76,3 +76,18 @@ ownership:
     to AWS addresses, the OAuth issuer is https://mcp.unified.com/, and the service names itself unified-mcp-service.
     This is NOT unified.to (all/unified-to/), a separate company whose MCP server is documented at docs.unified.to/mcp;
     the two are unrelated hosts and unrelated products.
+rfc9728:
+  endpoint: https://mcp.unified.com/mcp
+  metadata_url: https://mcp.unified.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.unified.com/mcp
+    authorization_servers:
+    - https://mcp.unified.com/
+    scopes_supported:
+    - openid
+    bearer_methods_supported:
+    - header
