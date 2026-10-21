@@ -1,0 +1,74 @@
+edges:
+- partner_name: Amazon Ads (partner directory, technology)
+  partner: amazon
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://advertising.amazon.com/partners/directory
+  mirror_of: amazon/integrations/amazon-integration-edges.yml
+  apps:
+  - Unified Enterpirses Corp
+  contract_reference:
+    register: Amazon Ads Partner Directory (advertising.amazon.com/partners/directory, GetPartners)
+    registered_name: Unified Enterpirses Corp
+    register_id: amzn1.ads1.ma1.5ojeqympk2t5lim6xnscxdmky
+    matched_domain: unified.com
+    matched_by: domain
+    services:
+    - ADVERTISING_EFFECTIVENESS
+    - AUDIENCE_AND_TARGETING
+    - AUDIENCE_MEASUREMENT
+    - AUDIENCE_VERIFICATION
+    - AUDIO_ADS_PRODUCTION
+    - AUDIO_MEASUREMENT
+    - BRAND_MEASUREMENT
+    - BRAND_SAFETY
+    - BUSINESS_AND_MARKETING_INTELLIGENCE_TOOLS
+    - CAMPAIGN_MANAGEMENT
+    - CAMPAIGN_MONITORING
+    - CAMPAIGN_REPORTING
+    - CAMPAIGN_SETUP
+    - CREATIVE_TOOLS
+    - CUSTOMER_DATA_PLATFORM
+    ads_products:
+    - AMAZON_ATTRIBUTION
+    - AMAZON_DSP
+    - AUDIO_ADS
+    - SPONSORED_BRANDS
+    - SPONSORED_DISPLAY
+    - SPONSORED_PRODUCTS
+    - STORES
+    - VIDEO_ADS
+    service_models:
+    - SELF_SERVICE
+    - SERVICE
+    signal_note: listing = participation; accreditation recorded as partner_tier; ads_certifications are Amazon
+      Ads LEARNING certifications held by staff, not product conformance, never certified_products
+    detected_by: sweep-amazon-sp-api-appstore.py
+    detected: '2026-10-21'
+    ads_certifications:
+    - AMAZON_ADS_CAMPAIGN_PLANNING
+    - AMAZON_ADS_FOUNDATIONS
+    - AMAZON_DSP
+    - AMAZON_MARKETING_CLOUD
+    - AMAZON_RETAIL
+    - SPONSORED_ADS
+    - VIDEO_ADS
+  detected: '2026-10-21'
+  detected_by: sweep-amazon-sp-api-appstore.py
+  partner_tier:
+  - PARTNER
+generated: '2026-10-21'
+method: searched
+source:
+- https://sellercentral.amazon.com/selling-partner-appstore
+- https://advertising.amazon.com/partners/directory
+- https://sellercentral.amazon.com/gspn
+checked:
+- https://advertising.amazon.com/partners/directory
+- https://sellercentral.amazon.com/gspn
+- https://sellercentral.amazon.com/selling-partner-appstore
