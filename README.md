@@ -64,5 +64,121 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Unified is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/unified_stock/
+Unified (Unified Enterprise Corp.) is a New York based omnichannel digital advertising company that pairs a purpose-built social advertising insights and investment-intelligence platform with managed campaign services across paid social, programmatic, OTT and digital audio. Client access to the platform runs through the get.unified.com application and a GitBook-hosted documentation space at docs.unified.com that is behind single sign-on. The company also operates a production remote Model Context Protocol server at https://mcp.unified.com/mcp, fronted by its own OAuth authorization server (RFC 8414 metadata, RFC 7591 dynamic client registration, PKCE S256) and an RFC 9728 protected-resource descriptor, plus a FastAPI operations service at api.unified.com that publishes an OpenAPI 3.1 description of its root and health endpoints. iHeartMedia, a long-standing partner and investor, is reported to have acquired the company; Unified continues to operate under its own brand at unified.com.
+
+**Areas:** Company · Advertising · Social Media · Digital Advertising · Marketing · Analytics · Media · Agents · MCP
+
+## Unified on APIs.io
+
+Everything profiled for Unified is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/unified/](https://apis.io/providers/unified/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Unified Health API](https://apis.io/apis/unified/unified-health-api/) — The health API from Unified — 4 operation(s) for health.
+- [Unified Unified Mcp Service API](https://apis.io/apis/unified/unified-unified-mcp-service-api/) — The Unified Mcp Service API from Unified — 1 operation(s) for unified mcp service.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Unified MCP Service](https://apis.io/servers/unified/unified-mcp-service/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Unified Mcp Service Overlay](https://apis.io/overlays/unified/unified-mcp-service-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Unified Authentication](https://apis.io/security/unified/unified-authentication/)
+- [Unified Domain Security](https://apis.io/security/unified/unified-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Unified Scopes](https://apis.io/scopes/unified/unified-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Unified Plans Pricing](https://apis.io/plans/unified/unified-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Unified Rate Limits](https://apis.io/rate-limits/unified/unified-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.unified.com/)
+- [Blog](https://www.unified.com/blog/)
+- [Terms of service](https://www.unified.com/docs/terms-of-use)
+- [Privacy policy](https://www.unified.com/docs/privacy-policy)
+- [GitHub](https://github.com/Unified)
+
+## API Evangelist rating
+
+**Kin Score 31.0** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 37.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 16.1 |
+| Access clarity | 27.6 |
+
+**Agent readiness 52.6** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/unified/](https://apis.io/providers/unified/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Unified: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/unified/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
